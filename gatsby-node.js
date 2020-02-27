@@ -155,35 +155,16 @@ exports.createPages = ({ graphql, actions }) => {
       }
     }
   `).then(async result => {
-    const agendas = result.data.allAgenda.edges
+    console.log('COMEÇANDO PAGINAS')
 
-    // const anos = await result.data.allAgenda.group.map( ano => ano.fieldValue)
+    //creating timeline pages
     const anos = await result.data.allAgenda.group.map( (ano, index) => {
       const pathname = index === 0 ?  "/" : `/sousa/${index}` 
       return ({ ano: ano.fieldValue, pathname: pathname })
     })
-    
 
-    // anos.forEach( (ano, index) => {
-      
-       
-    //   const pathname = index === 0 ?  "/" : `/sousa/${index}`
-      
-
-    //   createPage({
-    //     path: pathname,
-    //     component: path.resolve(`./src/templates/agenda-list.js`),
-    //     context: {
-    //       anos: anos,
-    //       ano: ano.toString(),
-    //     }
-    //   })
-
-    // })
-
-    anos.forEach( (item, index) => {
-      
-      
+    await anos.forEach( item => {  
+      console.log('FAZEANDO PAGINA')
       createPage({
         path: item.pathname,
         component: path.resolve(`./src/templates/agenda-list.js`),
@@ -192,12 +173,24 @@ exports.createPages = ({ graphql, actions }) => {
           ano: item.ano.toString(),
         }
       })
-
     })
-    
-    
-    
 
+    console.log('TERMINOU PAGINAS')
+    
+    //creating agendas
+    const agendas = result.data.allAgenda.edges
+    
+    agendas.map((agenda) => {
+        console.log('criando página da agenda')
+        createPage({
+          path: `${agenda.node.slug}`,
+          component: path.resolve(`./src/templates/agenda-view.js`),
+          context: {
+            name: agenda.node.name
+          }
+        })
+      }
+    )
     
     
   })

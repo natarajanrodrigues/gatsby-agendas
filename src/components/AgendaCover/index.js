@@ -69,20 +69,36 @@
 
 
 
+// import React from 'react';
+// import Img from 'gatsby-image'
+
+// const AgendaCover = ({ capa }) => {
+  
+//   return (
+//     <div style={{maxWidth: '15em'}}>
+//       { 
+//         !!capa && !!capa.childImageSharp && !!capa.childImageSharp.fluid && 
+//           <Img fluid={capa.childImageSharp.fluid} style={{maxWidth: '10em'}}/>
+//       }
+      
+//     </div>
+//   );
+// }
+
+// export default AgendaCover
+
+
+
 import React from 'react';
 import Img from 'gatsby-image'
 
 const AgendaCover = ({ capa }) => {
   
   return (
-    <div style={{maxWidth: '10em'}}>
-      {/* <Img fluid={capa} /> */}
+    <div style={{maxWidth: '400px'}}>
       { 
-      !!capa && !!capa.childImageSharp && !!capa.childImageSharp.fluid && 
-      <Img fluid={capa.childImageSharp.fluid} style={{maxWidth: '10em'}}/>
-
-        // !!capa.childImageSharp && !!capa.childImageSharp.fixed && 
-        // <Img fixed={capa.childImageSharp.fixed} />
+        !!capa && !!capa.childImageSharp && !!capa.childImageSharp.fluid && 
+        <Img fluid={capa.childImageSharp.fluid} style={{maxWidth: '400px'}} />
       }
       
     </div>
