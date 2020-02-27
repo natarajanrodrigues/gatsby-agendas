@@ -1,16 +1,33 @@
 import React from "react"
 import { graphql } from "gatsby"
 import AgendaCover from "../components/AgendaCover"
+import { Link } from "gatsby"
+
 
 const AgendaList = ({ data, pageContext }) => {
   
   const agendaList = data.allAgenda.edges
-  const { anos }  = pageContext
+  const { anos, ano }  = pageContext
 
   return (
     <>
       <ul>
-      { anos.map( ano => <li key={`ano-key-${ano}`}>{ano}</li>) }
+        { 
+          anos.map( (item) => {
+            
+            return (
+              <li key={`ano-key-${item.ano}`}>
+                <Link to={item.pathname}>
+                { item.ano }
+                { item.ano === ano && ' - Este ano' }
+                </Link>
+              </li>
+            )
+
+          }) 
+          
+        }
+        
       </ul>
       
       <ul>
@@ -42,8 +59,8 @@ const AgendaList = ({ data, pageContext }) => {
 }
 
 export const query = graphql`
-  query AgendaList {
-    allAgenda(sort: {fields: date, order: DESC} ) {
+  query AgendaList($ano: Date!) {
+    allAgenda(sort: {fields: date, order: DESC}, filter: {ano: {eq: $ano}} ) {
       edges {
         node {
           slug

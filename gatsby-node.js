@@ -72,6 +72,62 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
 }
 
 
+// exports.createPages = ({ graphql, actions }) => {
+//   const { createPage } = actions
+//   return graphql(`
+//     {
+//       allAgenda(sort: {fields: date, order: DESC}) {
+//         group(field: ano) {
+//           fieldValue
+//           totalCount
+//           nodes {
+//             name
+//             mes
+//             ano
+//           }
+//         }
+//         edges {
+//           node {
+//             slug
+//             name
+//             ano
+//             ccbnb
+//             downloadPath
+//             mes
+//           }
+//         }
+//       }
+//     }
+//   `).then(async result => {
+//     const agendas = result.data.allAgenda.edges
+
+//     const anos = await result.data.allAgenda.group.map( x => x.fieldValue )
+//     console.log("TCL: const", anos)
+
+//     // agendas.forEach(({ node, next, previous }) => {
+//     //   createPage({
+//     //     path: node.slug,
+//     //     component: path.resolve(`./src/templates/blog-post.js`),
+//     //     context: {
+//     //       // Data passed to context is available
+//     //       // in page queries as GraphQL variables.
+//     //       slug: node.slug,
+//     //     },
+//     //   })
+//     // })
+
+//     createPage({
+//       path: "/",
+//       component: path.resolve(`./src/templates/agenda-list.js`),
+//       context: {
+//         anos: anos
+//       }
+//     })
+    
+//   })
+// }
+
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
@@ -101,28 +157,48 @@ exports.createPages = ({ graphql, actions }) => {
   `).then(async result => {
     const agendas = result.data.allAgenda.edges
 
-    const anos = await result.data.allAgenda.group.map( x => x.fieldValue )
-    console.log("TCL: const", anos)
+    // const anos = await result.data.allAgenda.group.map( ano => ano.fieldValue)
+    const anos = await result.data.allAgenda.group.map( (ano, index) => {
+      const pathname = index === 0 ?  "/" : `/sousa/${index}` 
+      return ({ ano: ano.fieldValue, pathname: pathname })
+    })
+    
 
-    // agendas.forEach(({ node, next, previous }) => {
+    // anos.forEach( (ano, index) => {
+      
+       
+    //   const pathname = index === 0 ?  "/" : `/sousa/${index}`
+      
+
     //   createPage({
-    //     path: node.slug,
-    //     component: path.resolve(`./src/templates/blog-post.js`),
+    //     path: pathname,
+    //     component: path.resolve(`./src/templates/agenda-list.js`),
     //     context: {
-    //       // Data passed to context is available
-    //       // in page queries as GraphQL variables.
-    //       slug: node.slug,
-    //     },
+    //       anos: anos,
+    //       ano: ano.toString(),
+    //     }
     //   })
+
     // })
 
-    createPage({
-      path: "/",
-      component: path.resolve(`./src/templates/agenda-list.js`),
-      context: {
-        anos: anos
-      }
+    anos.forEach( (item, index) => {
+      
+      
+      createPage({
+        path: item.pathname,
+        component: path.resolve(`./src/templates/agenda-list.js`),
+        context: {
+          anos: anos,
+          ano: item.ano.toString(),
+        }
+      })
+
     })
+    
+    
+    
+
+    
     
   })
 }
