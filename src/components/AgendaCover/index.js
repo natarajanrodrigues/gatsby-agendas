@@ -95,7 +95,7 @@ import Img from 'gatsby-image'
 const AgendaCover = ({ capa }) => {
   
   return (
-    <div style={{maxWidth: '30vw'}}>
+    <div style={{maxWidth: '20vw'}}>
       { 
         !!capa && !!capa.childImageSharp && !!capa.childImageSharp.fluid && 
         <Img fluid={capa.childImageSharp.fluid} style={{maxWidth: '400px'}} />
