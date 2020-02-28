@@ -16,10 +16,11 @@ const AgendaList = ({ data, pageContext }) => {
           anos.map( (item) => {
             
             return (
-              <span style={{padding: '1em'}} key={`ano-key-${item.ano}`}>
+              <span style={{padding: '0.5em'}} key={`ano-key-${item.ano}`}>
                 <Link to={item.pathname}>
+                { item.ano === ano && '(' }
                 { item.ano }
-                { item.ano === ano && ' <--' }
+                { item.ano === ano && ')' }
                 </Link>
               </span>
             )
@@ -73,7 +74,7 @@ export const query = graphql`
           capa  {
             childImageSharp {
               fluid (maxWidth: 800) {
-                ...GatsbyImageSharpFluid_tracedSVG
+                ...GatsbyImageSharpFluid
               }
             }
           }
