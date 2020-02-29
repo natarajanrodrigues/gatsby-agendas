@@ -14,7 +14,10 @@ const AgendaView = ({ data, pageContext }) => {
   return (
     <>
       <div style={{overflow:'scroll', width: '80vw', height:'90vh', border: "1px solid black"}}>
-        <embed src={`${pdfAgenda}#toolbar=0`}  width="100%" height="100%"></embed>  
+        {/* <embed src={`${pdfAgenda}#toolbar=0`}  width="100%" height="100%"></embed>   */}
+        <object data={`${pdfAgenda}#toolbar=0`} type="application/pdf" width="100%" height="100%">
+          Agenda CCBNB
+        </object>  
       </div>  
     </>
   )
