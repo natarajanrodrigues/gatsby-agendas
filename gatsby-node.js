@@ -158,8 +158,14 @@ exports.createPages = ({ graphql, actions }) => {
     console.log('COMEÇANDO PAGINAS')
 
     //creating timeline pages
+    // const anos = await result.data.allAgenda.group.map( (ano, index) => {
+    //   const pathname = index === 0 ?  "/" : `/sousa/${index}` 
+    //   return ({ ano: ano.fieldValue, pathname: pathname })
+    // })
+
+    //creating timeline pages
     const anos = await result.data.allAgenda.group.map( (ano, index) => {
-      const pathname = index === 0 ?  "/" : `/sousa/${index}` 
+      const pathname = `/sousa/${ano.fieldValue}` 
       return ({ ano: ano.fieldValue, pathname: pathname })
     })
 
