@@ -1,3 +1,9 @@
+A simple POC with using Gastby. 
+
+It gets the PDF files (the CCBNB's agendas), transform the first page extracting it as a PNG cover and create pages to show and explore the agendas. 
+
+
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.org">
